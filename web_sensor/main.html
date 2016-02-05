@@ -1,0 +1,40 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="raphael"></script>
+<script src="justgage"></script>
+
+<script>
+function callback(tempStr, status){
+	if (status == "success") {
+		temp = parseFloat(tempStr).toFixed(2);
+		g.refresh(temp);
+		setTimeout(getReading, 1000);
+	}
+	else {
+		alert("There was a problem");
+	}
+}
+
+function getReading(){
+   	$.get('/temp', callback);
+}
+</script>
+</head>	
+
+<body>
+<div id="gauge" class="200x160px"></div>
+
+<script>
+var g = new JustGage({
+    id: "gauge",
+    value: 0,
+    min: 10,
+    max: 60,
+    title: "CPU Temp 'C"
+});
+getReading();
+</script>
+
+</body>
+</html>
